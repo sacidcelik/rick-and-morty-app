@@ -23,6 +23,10 @@ function App() {
       });
   }, [pages]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [detailedCharacter]);
+
   function onFilterByName(event) {
     const inputField = event.target;
     const searchTerm = inputField.value;
