@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components/macro";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components/macro';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
-  const [view, setView] = useState("list");
-  const [previousView, setPreviousView] = useState("");
+  const [view, setView] = useState('list');
+  const [previousView, setPreviousView] = useState('');
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
@@ -41,20 +41,16 @@ function App() {
       );
     });
     setFilteredCharacters(filteredCharacters);
-    setView("filtered");
+    setView('filtered');
   }
 
   function renderCharacters(characters) {
     return (
       <CardWrapper>
         {characters.map((character, index) => (
-          <Card key={index}>
+          <Card onClick={() => onRenderCharacterDetails(character)} key={index}>
             <h2>{character.name}</h2>
-            <img
-              onClick={() => onRenderCharacterDetails(character)}
-              src={character.image}
-              alt={character.name}
-            />
+            <img src={character.image} alt={character.name} />
           </Card>
         ))}
       </CardWrapper>
@@ -63,14 +59,14 @@ function App() {
 
   function onRenderCharacterDetails(character) {
     setDetailedCharacter(character);
-    setPreviousView(view);
-    setView("detail");
+    if (view !== 'detail') setPreviousView(view);
+    setView('detail');
   }
 
   function Mainview() {
-    if (view === "detail") {
+    if (view === 'detail') {
       return Characterdetails(detailedCharacter);
-    } else if (view === "list") {
+    } else if (view === 'list') {
       return renderCharacters(characters);
     } else {
       return renderCharacters(filteredCharacters);
@@ -80,13 +76,9 @@ function App() {
   function Characterdetails(character) {
     return (
       <>
-        <DetailsCard>
+        <DetailsCard onClick={() => setView(previousView)}>
           <h2>{character.name}</h2>
-          <img
-            onClick={() => setView(previousView)}
-            src={character.image}
-            alt={character.name}
-          />
+          <img src={character.image} alt={character.name} />
           <p>Status: {character.status}</p>
           <p>Species: {character.species}</p>
           <p>Gender: {character.gender}</p>
