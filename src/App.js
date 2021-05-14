@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
+import { useState, useEffect } from "react";
+import styled from "styled-components/macro";
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
-  const [view, setView] = useState('list');
-  const [previousView, setPreviousView] = useState('');
+  const [view, setView] = useState("list");
+  const [previousView, setPreviousView] = useState("");
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
@@ -23,9 +23,9 @@ function App() {
       });
   }, [pages]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [detailedCharacter]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [detailedCharacter]);
 
   function onFilterByName(event) {
     const inputField = event.target;
@@ -45,7 +45,7 @@ function App() {
       );
     });
     setFilteredCharacters(filteredCharacters);
-    setView('filtered');
+    setView("filtered");
   }
 
   function renderCharacters(characters) {
@@ -63,14 +63,14 @@ function App() {
 
   function onRenderCharacterDetails(character) {
     setDetailedCharacter(character);
-    if (view !== 'detail') setPreviousView(view);
-    setView('detail');
+    if (view !== "detail") setPreviousView(view);
+    setView("detail");
   }
 
   function Mainview() {
-    if (view === 'detail') {
+    if (view === "detail") {
       return Characterdetails(detailedCharacter);
-    } else if (view === 'list') {
+    } else if (view === "list") {
       return renderCharacters(characters);
     } else {
       return renderCharacters(filteredCharacters);
@@ -141,7 +141,7 @@ const Card = styled.article`
 `;
 
 const DetailsCard = styled.article`
-  background-color: white;
+  background-color: #fffe;
   display: flex;
   flex-direction: column;
   place-items: center;
@@ -149,7 +149,11 @@ const DetailsCard = styled.article`
   margin: 1rem auto;
   padding: 1rem;
   border-radius: 0.8rem;
-
+  border: 3px solid white;
+  box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  margin: 50vh 50vw;
+  transform: translate(-50%, -70%);
   img {
     width: 80%;
     border-radius: 0.8rem;
