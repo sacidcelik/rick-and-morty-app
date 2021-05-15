@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
 import Characters from './Characters';
 import Details from './Details';
+import Header from './Header';
 import Search from './Search';
 
 function App() {
@@ -89,9 +89,7 @@ function App() {
 
   return (
     <div>
-      <header>
-        <Headline>Rick and Morty Character Index</Headline>
-      </header>
+      <Header />
       <main>
         <Search onFilterByName={onFilterByName} />
         <Mainview />
@@ -101,7 +99,3 @@ function App() {
 }
 
 export default App;
-
-const Headline = styled.h1`
-  text-align: center;
-`;

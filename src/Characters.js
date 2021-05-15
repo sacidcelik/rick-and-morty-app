@@ -40,3 +40,8 @@ const Card = styled.article`
     border-radius: 0.8rem;
   }
 `;
+
+Characters.propTypes = {
+  characters: PropTypes.array.isRequired,
+  onRenderCharacterDetails: PropTypes.func,
+};
