@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import Cancelbutton from './images/close.png';
+import Search from './Search';
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -105,12 +106,7 @@ function App() {
         <Headline>Rick and Morty Character</Headline>
       </header>
       <main>
-        <SearchboxInput
-          onChange={onFilterByName}
-          type="text"
-          placeholder="search here ..."
-          size="50"
-        />
+        <Search onFilterByName={onFilterByName} />
         <Mainview />
       </main>
     </div>
@@ -181,13 +177,6 @@ const DetailsCard = styled.article`
     padding: 0;
     margin: 0.5rem;
   }
-`;
-
-const SearchboxInput = styled.input`
-  display: block;
-  margin: 1rem auto 0.8rem;
-  width: 30%;
-  min-width: 300px;
 `;
 
 const Headline = styled.h1`
