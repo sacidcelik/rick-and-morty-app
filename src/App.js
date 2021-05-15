@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components/macro";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components/macro';
+import Cancelbutton from './images/close.png';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
-  const [view, setView] = useState("list");
-  const [previousView, setPreviousView] = useState("");
+  const [view, setView] = useState('list');
+  const [previousView, setPreviousView] = useState('');
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function App() {
       );
     });
     setFilteredCharacters(filteredCharacters);
-    setView("filtered");
+    setView('filtered');
   }
 
   function renderCharacters(characters) {
@@ -63,14 +64,14 @@ function App() {
 
   function onRenderCharacterDetails(character) {
     setDetailedCharacter(character);
-    if (view !== "detail") setPreviousView(view);
-    setView("detail");
+    if (view !== 'detail') setPreviousView(view);
+    setView('detail');
   }
 
   function Mainview() {
-    if (view === "detail") {
+    if (view === 'detail') {
       return Characterdetails(detailedCharacter);
-    } else if (view === "list") {
+    } else if (view === 'list') {
       return renderCharacters(characters);
     } else {
       return renderCharacters(filteredCharacters);
@@ -80,8 +81,13 @@ function App() {
   function Characterdetails(character) {
     return (
       <>
-        <DetailsCard onClick={() => setView(previousView)}>
+        <DetailsCard>
           <h2>{character.name}</h2>
+          <div
+            role="img"
+            aria-label="Close detailed view"
+            onClick={() => setView(previousView)}
+          ></div>
           <img src={character.image} alt={character.name} />
           <p>Status: {character.status}</p>
           <p>Species: {character.species}</p>
@@ -160,11 +166,23 @@ const DetailsCard = styled.article`
     margin-bottom: 1rem;
   }
 
+  div {
+    width: 60px;
+    height: 60px;
+    background-image: url(${Cancelbutton});
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -30px;
+    top: -30px;
+  }
+
   p {
     padding: 0;
     margin: 0.5rem;
   }
 `;
+
 const SearchboxInput = styled.input`
   display: block;
   margin: 1rem auto 0.8rem;
