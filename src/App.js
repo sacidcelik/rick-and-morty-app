@@ -50,10 +50,6 @@ function App() {
     setView('filtered');
   }
 
-  function onSetFiltered() {
-    setView('filtered');
-  }
-
   function renderCharacters(characters) {
     return (
       <Characters
@@ -71,7 +67,10 @@ function App() {
   function renderCharacterDetails(character) {
     return (
       <>
-        <Details character={character} onSetFiltered={() => onSetFiltered()} />
+        <Details
+          character={character}
+          onSetFiltered={() => setView('filtered')}
+        />
         {renderCharacters(filteredCharacters)}
       </>
     );
