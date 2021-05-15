@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
+import Characters from './Characters';
+import Details from './Details';
+import Header from './Header';
+import Search from './Search';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
   const [view, setView] = useState('list');
-  const [previousView, setPreviousView] = useState('');
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
@@ -23,9 +25,9 @@ function App() {
       });
   }, [pages]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [detailedCharacter]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [detailedCharacter]);
 
   function onFilterByName(event) {
     const inputField = event.target;
@@ -48,28 +50,36 @@ function App() {
     setView('filtered');
   }
 
+  function onSetFiltered() {
+    setView('filtered');
+  }
+
   function renderCharacters(characters) {
     return (
-      <CardWrapper>
-        {characters.map((character, index) => (
-          <Card onClick={() => onRenderCharacterDetails(character)} key={index}>
-            <h2>{character.name}</h2>
-            <img src={character.image} alt={character.name} />
-          </Card>
-        ))}
-      </CardWrapper>
+      <Characters
+        characters={characters}
+        onRenderCharacterDetails={onRenderCharacterDetails}
+      />
     );
   }
 
   function onRenderCharacterDetails(character) {
     setDetailedCharacter(character);
-    if (view !== 'detail') setPreviousView(view);
     setView('detail');
+  }
+
+  function renderCharacterDetails(character) {
+    return (
+      <>
+        <Details character={character} onSetFiltered={() => onSetFiltered()} />
+        {renderCharacters(filteredCharacters)}
+      </>
+    );
   }
 
   function Mainview() {
     if (view === 'detail') {
-      return Characterdetails(detailedCharacter);
+      return renderCharacterDetails(detailedCharacter);
     } else if (view === 'list') {
       return renderCharacters(characters);
     } else {
@@ -77,34 +87,11 @@ function App() {
     }
   }
 
-  function Characterdetails(character) {
-    return (
-      <>
-        <DetailsCard onClick={() => setView(previousView)}>
-          <h2>{character.name}</h2>
-          <img src={character.image} alt={character.name} />
-          <p>Status: {character.status}</p>
-          <p>Species: {character.species}</p>
-          <p>Gender: {character.gender}</p>
-          <p>Origin: {character.origin.name}</p>
-          <p>Location: {character.location.name}</p>
-        </DetailsCard>
-        {renderCharacters(filteredCharacters)}
-      </>
-    );
-  }
   return (
     <div>
-      <header>
-        <Headline>Rick and Morty Character</Headline>
-      </header>
+      <Header />
       <main>
-        <SearchboxInput
-          onChange={onFilterByName}
-          type="text"
-          placeholder="search here ..."
-          size="50"
-        />
+        <Search onFilterByName={onFilterByName} />
         <Mainview />
       </main>
     </div>
@@ -112,62 +99,3 @@ function App() {
 }
 
 export default App;
-
-const CardWrapper = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem 0;
-`;
-
-const Card = styled.article`
-  padding: 1rem;
-  width: 10rem;
-  text-align: center;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  background-color: white;
-  border-radius: 0.8rem;
-
-  h2 {
-    font-size: 1rem;
-  }
-
-  img {
-    width: 100%;
-    border-radius: 0.8rem;
-  }
-`;
-
-const DetailsCard = styled.article`
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  width: 400px;
-  margin: 1rem auto;
-  padding: 1rem;
-  border-radius: 0.8rem;
-
-  img {
-    width: 80%;
-    border-radius: 0.8rem;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    padding: 0;
-    margin: 0.5rem;
-  }
-`;
-const SearchboxInput = styled.input`
-  display: block;
-  margin: 1rem auto 0.8rem;
-  width: 30%;
-  min-width: 300px;
-`;
-
-const Headline = styled.h1`
-  text-align: center;
-`;
