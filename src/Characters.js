@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 export default function Characters({ characters, onRenderCharacterDetails }) {
   return (
     <CardWrapper>
-      {characters.map((character, index) => (
-        <Card onClick={() => onRenderCharacterDetails(character)} key={index}>
+      {characters.map((character) => (
+        <Card
+          onClick={() => onRenderCharacterDetails(character)}
+          key={character.id}
+        >
           <h2>{character.name}</h2>
           <img src={character.image} alt={character.name} />
         </Card>
@@ -23,6 +26,7 @@ const CardWrapper = styled.section`
 `;
 
 const Card = styled.article`
+  cursor: pointer;
   padding: 1rem;
   width: 10rem;
   text-align: center;
