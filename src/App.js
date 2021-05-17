@@ -20,15 +20,17 @@ function App() {
         if (pages <= 33) {
           setPages(pages + 1);
         }
-        if (pages === 34) {
+        /* if (pages === 34) {
           setFilteredCharacters(characters);
-        }
+        } */
       });
   }, [pages]);
 
-  /*   useEffect(() => {
+  useEffect(() => {
     setFilteredCharacters(characters);
-  }, [characters]); */
+  }, [characters]);
+
+  console.log(filteredCharacters);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);
