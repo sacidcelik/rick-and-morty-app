@@ -72,5 +72,4 @@ Details.propTypes = {
 const Instruction = styled.p`
   /* font-style: italic; */
   font-size: 0.8rem;
-  text-align: right;
 `;
