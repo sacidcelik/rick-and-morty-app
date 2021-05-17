@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cancelbutton from './images/close.png';
 
-export default function Details({ character, onSetFiltered }) {
+export default function Details({ character, onSetFiltered, onDetailClick }) {
   return (
     <DetailsCard>
       <h2>{character.name}</h2>
@@ -12,11 +12,11 @@ export default function Details({ character, onSetFiltered }) {
         onClick={onSetFiltered}
       ></div>
       <img src={character.image} alt={character.name} />
-      <p>Status: {character.status}</p>
-      <p>Species: {character.species}</p>
-      <p>Gender: {character.gender}</p>
-      <p>Origin: {character.origin.name}</p>
-      <p>Location: {character.location.name}</p>
+      <p onClick={onDetailClick}>Status: {character.status}</p>
+      <p onClick={onDetailClick}>Species: {character.species}</p>
+      <p onClick={onDetailClick}>Gender: {character.gender}</p>
+      <p onClick={onDetailClick}>Origin: {character.origin.name}</p>
+      <p onClick={onDetailClick}>Location: {character.location.name}</p>
     </DetailsCard>
   );
 }
@@ -50,15 +50,18 @@ const DetailsCard = styled.article`
     right: -30px;
     top: -30px;
     width: 60px;
+    cursor: pointer;
   }
 
   p {
     padding: 0;
     margin: 0.5rem;
+    cursor: pointer;
   }
 `;
 
 Details.propTypes = {
   character: PropTypes.object.isRequired,
   onSetFiltered: PropTypes.func,
+  onDetailClick: PropTypes.func,
 };

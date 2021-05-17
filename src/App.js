@@ -9,6 +9,7 @@ function App() {
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
   const [view, setView] = useState('list');
+  /*  const [previousView, setPreviousView] = useState(''); */
   const [pages, setPages] = useState(1);
 
   useEffect(() => {
@@ -19,11 +20,17 @@ function App() {
         if (pages <= 33) {
           setPages(pages + 1);
         }
-        if (pages === 34) {
+        /* if (pages === 34) {
           setFilteredCharacters(characters);
-        }
+        } */
       });
   }, [pages]);
+
+  useEffect(() => {
+    setFilteredCharacters(characters);
+  }, [characters]);
+
+  console.log(filteredCharacters);
 
   // useEffect(() => {
   //   window.scrollTo(0, 0);
@@ -64,12 +71,27 @@ function App() {
     setView('detail');
   }
 
+  function detailClick(event) {
+    const detailField = event.target.innerHTML.toLowerCase();
+    const detailTypeAndValue = detailField.split(':', 2);
+    const detailType = detailTypeAndValue[0].toString().trim();
+    const detailValue = detailTypeAndValue[1].toString().trim();
+    const filteredByDetail = characters.filter((character) => {
+      if (detailType === 'origin' || detailType === 'location')
+        return character[detailType].name.toLowerCase().includes(detailValue);
+      else return character[detailType].toLowerCase().includes(detailValue);
+    });
+    setFilteredCharacters(filteredByDetail);
+    setView('filtered');
+  }
+
   function renderCharacterDetails(character) {
     return (
       <>
         <Details
           character={character}
           onSetFiltered={() => setView('filtered')}
+          onDetailClick={detailClick}
         />
         {renderCharacters(filteredCharacters)}
       </>
@@ -79,10 +101,10 @@ function App() {
   function Mainview() {
     if (view === 'detail') {
       return renderCharacterDetails(detailedCharacter);
-    } else if (view === 'list') {
-      return renderCharacters(characters);
-    } else {
+    } else if (view === 'filtered') {
       return renderCharacters(filteredCharacters);
+    } else {
+      return renderCharacters(characters);
     }
   }
 
