@@ -7,7 +7,6 @@ export default function Search({ onFilterByName }) {
       onChange={onFilterByName}
       type="text"
       placeholder="search here ..."
-      size="50"
     />
   );
 }
