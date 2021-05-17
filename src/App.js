@@ -30,8 +30,6 @@ function App() {
     setFilteredCharacters(characters);
   }, [characters]);
 
-  console.log(filteredCharacters);
-
   // useEffect(() => {
   //   window.scrollTo(0, 0);
   // }, [detailedCharacter]);
@@ -79,7 +77,7 @@ function App() {
     const filteredByDetail = characters.filter((character) => {
       if (detailType === 'origin' || detailType === 'location')
         return character[detailType].name.toLowerCase().includes(detailValue);
-      else return character[detailType].toLowerCase().includes(detailValue);
+      else return character[detailType].toLowerCase() === detailValue;
     });
     setFilteredCharacters(filteredByDetail);
     setView('filtered');

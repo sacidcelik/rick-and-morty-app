@@ -17,6 +17,9 @@ export default function Details({ character, onSetFiltered, onDetailClick }) {
       <p onClick={onDetailClick}>Gender: {character.gender}</p>
       <p onClick={onDetailClick}>Origin: {character.origin.name}</p>
       <p onClick={onDetailClick}>Location: {character.location.name}</p>
+      <Instruction>
+        Clicking on a detail will filter the list of characters accordingly.
+      </Instruction>
     </DetailsCard>
   );
 }
@@ -65,3 +68,9 @@ Details.propTypes = {
   onSetFiltered: PropTypes.func,
   onDetailClick: PropTypes.func,
 };
+
+const Instruction = styled.p`
+  /* font-style: italic; */
+  font-size: 0.8rem;
+  text-align: right;
+`;
