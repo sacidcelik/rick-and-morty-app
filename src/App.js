@@ -1,26 +1,23 @@
-import { useState, useEffect } from "react";
-import Characters from "./components/Characters";
-import Details from "./components/Details";
-import Header from "./components/Header";
-import Search from "./components/Search";
+import { useState, useEffect } from 'react';
+import Characters from './components/Characters';
+import Details from './components/Details';
+import Header from './components/Header';
+import Search from './components/Search';
+import { Switch, Route } from 'react-router-dom';
+import Favorites from './pages/Favorites';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [detailedCharacter, setDetailedCharacter] = useState([]);
-  const [view, setView] = useState("list");
+  const [bookmarkedCharacters, setBookmarkedCharacters] = useState([]);
+  const [view, setView] = useState('list');
   /*  const [previousView, setPreviousView] = useState(''); */
 
-  function addToFav(characterToAdd) {
-    const newArray = characters.find(
-      (character) => character.id === characterToAdd.id
-    );
-    console.log(newArray);
-    // setCharacters(newArray);
-  }
+  console.log(bookmarkedCharacters);
 
   useEffect(() => {
-    fetchData("https://rickandmortyapi.com/api/character");
+    fetchData('https://rickandmortyapi.com/api/character');
   }, []);
 
   const fetchData = async (url) => {
@@ -33,6 +30,32 @@ function App() {
       fetchData(data.info.next);
     }
   };
+
+  function toggleFav(clickedCharacter) {
+    isFavorite(clickedCharacter)
+      ? removeFromFav(clickedCharacter)
+      : addToFav(clickedCharacter);
+  }
+
+  function addToFav(characterToAdd) {
+    const bookmarkedCharacter = characters.find(
+      (character) => character.id === characterToAdd.id
+    );
+    setBookmarkedCharacters([...bookmarkedCharacters, bookmarkedCharacter]);
+  }
+
+  function removeFromFav(characterToRemove) {
+    const remainingCharacters = bookmarkedCharacters.filter(
+      (character) => character.id !== characterToRemove.id
+    );
+    setBookmarkedCharacters(remainingCharacters);
+  }
+
+  function isFavorite(character) {
+    return bookmarkedCharacters.find(
+      (bookmarkedCharacter) => bookmarkedCharacter.id === character.id
+    );
+  }
 
   useEffect(() => {
     setFilteredCharacters(characters);
@@ -60,7 +83,7 @@ function App() {
       );
     });
     setFilteredCharacters(filteredCharacters);
-    setView("filtered");
+    setView('filtered');
   }
 
   function renderCharacters(characters) {
@@ -68,27 +91,29 @@ function App() {
       <Characters
         characters={characters}
         onRenderCharacterDetails={onRenderCharacterDetails}
+        onAddToFav={toggleFav}
+        isFav={isFavorite}
       />
     );
   }
 
   function onRenderCharacterDetails(character) {
     setDetailedCharacter(character);
-    setView("detail");
+    setView('detail');
   }
 
   function detailClick(event) {
     const detailField = event.target.innerHTML.toLowerCase();
-    const detailTypeAndValue = detailField.split(":", 2);
+    const detailTypeAndValue = detailField.split(':', 2);
     const detailType = detailTypeAndValue[0].toString().trim();
     const detailValue = detailTypeAndValue[1].toString().trim();
     const filteredByDetail = characters.filter((character) => {
-      if (detailType === "origin" || detailType === "location")
+      if (detailType === 'origin' || detailType === 'location')
         return character[detailType].name.toLowerCase().includes(detailValue);
       else return character[detailType].toLowerCase() === detailValue;
     });
     setFilteredCharacters(filteredByDetail);
-    setView("filtered");
+    setView('filtered');
   }
 
   function renderCharacterDetails(character) {
@@ -96,9 +121,10 @@ function App() {
       <>
         <Details
           character={character}
-          onSetFiltered={() => setView("filtered")}
+          onSetFiltered={() => setView('filtered')}
           onDetailClick={detailClick}
-          onAddToFav={() => addToFav(character)}
+          onAddToFav={() => toggleFav(character)}
+          isFav={isFavorite}
         />
         {renderCharacters(filteredCharacters)}
       </>
@@ -106,9 +132,9 @@ function App() {
   }
 
   function Mainview() {
-    if (view === "detail") {
+    if (view === 'detail') {
       return renderCharacterDetails(detailedCharacter);
-    } else if (view === "filtered") {
+    } else if (view === 'filtered') {
       return renderCharacters(filteredCharacters);
     } else {
       return renderCharacters(characters);
@@ -120,7 +146,19 @@ function App() {
       <Header />
       <main>
         <Search onFilterByName={onFilterByName} />
-        <Mainview />
+        <Switch>
+          <Route exact path="/">
+            <Mainview />
+          </Route>
+          <Route exact path="/favorites">
+            <Favorites
+              bookmarkedCharacters={bookmarkedCharacters}
+              onRenderCharacterDetails={onRenderCharacterDetails}
+              onAddToFav={toggleFav}
+              isFav={isFavorite}
+            />
+          </Route>
+        </Switch>
       </main>
     </div>
   );

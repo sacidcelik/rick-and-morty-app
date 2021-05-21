@@ -1,13 +1,14 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import Cancelbutton from "../assets/close.png";
-import PickleMark from "./PickleMark";
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import Cancelbutton from '../assets/close.png';
+import PickleMark from './PickleMark';
 
 export default function Details({
   character,
   onSetFiltered,
   onDetailClick,
   onAddToFav,
+  isFav,
 }) {
   return (
     <DetailsCard>
@@ -17,7 +18,12 @@ export default function Details({
         aria-label="Close detailed view"
         onClick={onSetFiltered}
       ></div>
-      <PickleMark isBig={true} character={character} onAddToFav={onAddToFav} />
+      <PickleMark
+        isFav={isFav}
+        isBig={true}
+        character={character}
+        onAddToFav={onAddToFav}
+      />
       <CharImg src={character.image} alt={character.name} />
       <p onClick={onDetailClick}>Status: {character.status}</p>
       <p onClick={onDetailClick}>Species: {character.species}</p>
@@ -44,6 +50,7 @@ const DetailsCard = styled.article`
   position: fixed;
   transform: translate(-50%, -70%);
   width: 400px;
+  z-index: 100;
 
   div {
     background-image: url(${Cancelbutton});

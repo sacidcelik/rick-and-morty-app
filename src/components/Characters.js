@@ -1,16 +1,29 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import PickleMark from './PickleMark';
 
-export default function Characters({ characters, onRenderCharacterDetails }) {
+export default function Characters({
+  characters,
+  onRenderCharacterDetails,
+  isFav,
+  onAddToFav,
+}) {
   return (
     <CardWrapper>
       {characters.map((character) => (
-        <Card
-          onClick={() => onRenderCharacterDetails(character)}
-          key={character.id}
-        >
+        <Card key={character.id}>
           <h2>{character.name}</h2>
-          <img src={character.image} alt={character.name} />
+          <CharImg
+            onClick={() => onRenderCharacterDetails(character)}
+            src={character.image}
+            alt={character.name}
+          />
+          <PickleMark
+            isFav={isFav}
+            isBig={false}
+            character={character}
+            onAddToFav={() => onAddToFav(character)}
+          />
         </Card>
       ))}
     </CardWrapper>
@@ -26,7 +39,6 @@ const CardWrapper = styled.section`
 `;
 
 const Card = styled.article`
-  cursor: pointer;
   padding: 1rem;
   width: 10rem;
   text-align: center;
@@ -34,14 +46,10 @@ const Card = styled.article`
   grid-template-rows: 1fr auto;
   background-color: white;
   border-radius: 0.8rem;
+  position: relative;
 
   h2 {
     font-size: 1rem;
-  }
-
-  img {
-    width: 100%;
-    border-radius: 0.8rem;
   }
 `;
 
@@ -49,3 +57,9 @@ Characters.propTypes = {
   characters: PropTypes.array.isRequired,
   onRenderCharacterDetails: PropTypes.func,
 };
+
+const CharImg = styled.img`
+  width: 100%;
+  border-radius: 0.8rem;
+  cursor: pointer;
+`;
