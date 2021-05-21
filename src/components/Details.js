@@ -1,8 +1,14 @@
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Cancelbutton from './images/close.png';
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import Cancelbutton from "../assets/close.png";
+import PickleMark from "./PickleMark";
 
-export default function Details({ character, onSetFiltered, onDetailClick }) {
+export default function Details({
+  character,
+  onSetFiltered,
+  onDetailClick,
+  onAddToFav,
+}) {
   return (
     <DetailsCard>
       <h2>{character.name}</h2>
@@ -11,7 +17,8 @@ export default function Details({ character, onSetFiltered, onDetailClick }) {
         aria-label="Close detailed view"
         onClick={onSetFiltered}
       ></div>
-      <img src={character.image} alt={character.name} />
+      <PickleMark isBig={true} character={character} onAddToFav={onAddToFav} />
+      <CharImg src={character.image} alt={character.name} />
       <p onClick={onDetailClick}>Status: {character.status}</p>
       <p onClick={onDetailClick}>Species: {character.species}</p>
       <p onClick={onDetailClick}>Gender: {character.gender}</p>
@@ -38,19 +45,13 @@ const DetailsCard = styled.article`
   transform: translate(-50%, -70%);
   width: 400px;
 
-  img {
-    border-radius: 0.8rem;
-    margin-bottom: 1rem;
-    width: 80%;
-  }
-
   div {
     background-image: url(${Cancelbutton});
     background-repeat: no-repeat;
     background-size: contain;
     height: 60px;
     position: absolute;
-    right: -30px;
+    left: -30px;
     top: -30px;
     width: 60px;
     cursor: pointer;
@@ -72,4 +73,10 @@ Details.propTypes = {
 const Instruction = styled.p`
   /* font-style: italic; */
   font-size: 0.8rem;
+`;
+
+const CharImg = styled.img`
+  border-radius: 0.8rem;
+  margin-bottom: 1rem;
+  width: 80%;
 `;
