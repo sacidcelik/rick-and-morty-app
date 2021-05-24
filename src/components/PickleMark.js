@@ -27,12 +27,13 @@ const PickleRick = styled.img`
   position: ${(props) => (props.isStatic ? 'static' : 'absolute')};
   right: -3%;
   top: -8%;
+  cursor: pointer;
 `;
 
 PickleMark.propTypes = {
   character: PropTypes.object.isRequired,
   onAddToFav: PropTypes.func,
-  isFav: PropTypes.bool,
+  isFav: PropTypes.func,
   isStatic: PropTypes.bool,
   isBig: PropTypes.bool,
 };

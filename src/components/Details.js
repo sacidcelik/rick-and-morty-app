@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cancelbutton from '../assets/close.png';
 import PickleMark from './PickleMark';
+import { Link } from 'react-router-dom';
 
 export default function Details({
   character,
@@ -26,11 +27,21 @@ export default function Details({
         onAddToFav={onAddToFav}
       />
       <CharImg src={character.image} alt={character.name} />
-      <p onClick={onDetailClick}>Status: {character.status}</p>
-      <p onClick={onDetailClick}>Species: {character.species}</p>
-      <p onClick={onDetailClick}>Gender: {character.gender}</p>
-      <p onClick={onDetailClick}>Origin: {character.origin.name}</p>
-      <p onClick={onDetailClick}>Location: {character.location.name}</p>
+      <p onClick={() => onDetailClick('status', character.status)}>
+        <Link to="/">Status: {character.status}</Link>
+      </p>
+      <p onClick={() => onDetailClick('species', character.species)}>
+        <Link to="/">Species: {character.species}</Link>
+      </p>
+      <p onClick={() => onDetailClick('gender', character.gender)}>
+        <Link to="/">Gender: {character.gender}</Link>
+      </p>
+      <p onClick={() => onDetailClick('origin', character.origin.name)}>
+        <Link to="/">Origin: {character.origin.name}</Link>
+      </p>
+      <p onClick={() => onDetailClick('location', character.location.name)}>
+        <Link to="/">Location: {character.location.name}</Link>
+      </p>
       <Instruction>
         Clicking on a detail will filter the list of characters accordingly.
       </Instruction>
@@ -78,7 +89,7 @@ Details.propTypes = {
   onSetFiltered: PropTypes.func,
   onDetailClick: PropTypes.func,
   onAddToFav: PropTypes.func,
-  isFav: PropTypes.bool,
+  isFav: PropTypes.func,
 };
 
 const Instruction = styled.p`

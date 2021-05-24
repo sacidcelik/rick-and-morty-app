@@ -1,6 +1,6 @@
-import styled from "styled-components/macro";
-import PropTypes from "prop-types";
-import PickleMark from "./PickleMark";
+import styled from 'styled-components/macro';
+import PropTypes from 'prop-types';
+import PickleMark from './PickleMark';
 
 export default function Characters({
   characters,
@@ -10,8 +10,8 @@ export default function Characters({
 }) {
   return (
     <CardWrapper>
-      {characters.map((character) => (
-        <Card key={character.id}>
+      {characters.map((character, index) => (
+        <Card key={index}>
           <h2>{character.name}</h2>
           <CharImg
             onClick={() => onRenderCharacterDetails(character)}
