@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import PickleMark from './PickleMark';
+import styled from "styled-components/macro";
+import PropTypes from "prop-types";
+import PickleMark from "./PickleMark";
 
 export default function Characters({
   characters,
