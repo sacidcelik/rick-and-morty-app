@@ -1,8 +1,14 @@
 import styled from 'styled-components/macro';
-
+import PropTypes from 'prop-types';
 import Pickle from '../assets/pickleRick.png';
 
-export default function PickleMark({ character, onAddToFav, isBig, isFav }) {
+export default function PickleMark({
+  character,
+  onAddToFav,
+  isBig,
+  isFav,
+  isStatic,
+}) {
   return (
     <PickleRick
       onClick={onAddToFav}
@@ -10,6 +16,7 @@ export default function PickleMark({ character, onAddToFav, isBig, isFav }) {
       alt="bookpickle this"
       isFavorite={isFav(character)}
       isBig={isBig}
+      isStatic={isStatic}
     />
   );
 }
@@ -17,7 +24,15 @@ export default function PickleMark({ character, onAddToFav, isBig, isFav }) {
 const PickleRick = styled.img`
   width: ${(props) => (props.isBig ? '80px' : '30px')};
   opacity: ${(props) => (props.isFavorite ? '1' : '0.5')};
-  position: absolute;
+  position: ${(props) => (props.isStatic ? 'static' : 'absolute')};
   right: -3%;
   top: -8%;
 `;
+
+PickleMark.propTypes = {
+  character: PropTypes.object.isRequired,
+  onAddToFav: PropTypes.func,
+  isFav: PropTypes.bool,
+  isStatic: PropTypes.bool,
+  isBig: PropTypes.bool,
+};
