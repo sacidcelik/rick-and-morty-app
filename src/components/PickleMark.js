@@ -1,6 +1,6 @@
-import styled from "styled-components/macro";
-
-import Pickle from "../assets/pickleRick.png";
+import styled from 'styled-components/macro';
+import PropTypes from 'prop-types';
+import Pickle from '../assets/pickleRick.png';
 
 export default function PickleMark({
   character,
@@ -22,9 +22,17 @@ export default function PickleMark({
 }
 
 const PickleRick = styled.img`
-  width: ${(props) => (props.isBig ? "80px" : "30px")};
-  opacity: ${(props) => (props.isFavorite ? "1" : "0.5")};
-  position: ${(props) => (props.isStatic ? "static" : "absolute")};
+  width: ${(props) => (props.isBig ? '80px' : '30px')};
+  opacity: ${(props) => (props.isFavorite ? '1' : '0.5')};
+  position: ${(props) => (props.isStatic ? 'static' : 'absolute')};
   right: -3%;
   top: -8%;
 `;
+
+PickleMark.propTypes = {
+  character: PropTypes.object.isRequired,
+  onAddToFav: PropTypes.func,
+  isFav: PropTypes.bool,
+  isStatic: PropTypes.bool,
+  isBig: PropTypes.bool,
+};

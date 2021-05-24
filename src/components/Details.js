@@ -9,9 +9,10 @@ export default function Details({
   onDetailClick,
   onAddToFav,
   isFav,
+  isStatic,
 }) {
   return (
-    <DetailsCard>
+    <DetailsCard isStatic={isStatic}>
       <h2>{character.name}</h2>
       <div
         role="img"
@@ -44,11 +45,12 @@ const DetailsCard = styled.article`
   box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  margin: 50vh 50vw;
+  margin: ${(props) => (props.isStatic ? '0' : '50vh 50vw')};
   padding: 1rem;
   place-items: center;
-  position: fixed;
-  transform: translate(-50%, -70%);
+  position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
+  transform: ${(props) =>
+    props.isStatic ? 'translate()' : 'translate(-50%, -70%)'};
   width: 400px;
   z-index: 100;
 
@@ -75,6 +77,8 @@ Details.propTypes = {
   character: PropTypes.object.isRequired,
   onSetFiltered: PropTypes.func,
   onDetailClick: PropTypes.func,
+  onAddToFav: PropTypes.func,
+  isFav: PropTypes.bool,
 };
 
 const Instruction = styled.p`
