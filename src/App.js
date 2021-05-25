@@ -77,7 +77,6 @@ function App() {
   }
 
   //filters
-
   function onFilterByName(event) {
     const inputField = event.target;
     const searchTerm = inputField.value;
@@ -102,12 +101,13 @@ function App() {
   function detailClick(property, characterDetail) {
     console.log(property);
     const filteredByDetail = characters.filter((character) => {
-      if (property.includes('origin') || property.includes('location'))
+      if (property === 'origin' || property === 'location')
         return character[property].name === characterDetail;
       else return character[property] === characterDetail;
     });
     setFilteredCharacters(filteredByDetail);
     setView('filtered');
+    //history.push("/")
   }
 
   //renders
