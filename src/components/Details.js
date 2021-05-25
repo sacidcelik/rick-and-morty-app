@@ -56,12 +56,11 @@ const DetailsCard = styled.article`
   box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  margin: ${(props) => (props.isStatic ? '0' : '50vh 50vw')};
+  margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   padding: 1rem;
   place-items: center;
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
-  transform: ${(props) =>
-    props.isStatic ? 'translate()' : 'translate(-50%, -70%)'};
+  transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -70%)')};
   width: 400px;
   z-index: 100;
 
