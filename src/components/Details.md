@@ -1,4 +1,5 @@
 ```jsx
+import { BrowserRouter as Router } from 'react-router-dom';
 const jerry = {
   id: 5,
   name: 'Jerry Smith',
@@ -23,10 +24,11 @@ const jerry = {
   url: 'https://rickandmortyapi.com/api/character/5',
   created: '2017-11-04T19:26:56.301Z',
 };
-
-<Details
-  character={jerry}
-  isFav={(character) => true}
-  isStatic={(character) => true}
-/>;
+<Router>
+  <Details
+    character={jerry}
+    isFav={(character) => true}
+    isStatic={(character) => true}
+  />
+</Router>;
 ```
