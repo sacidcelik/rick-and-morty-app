@@ -7,3 +7,5 @@ This was created as part of a group project during my neuefische web dev bootcam
 ## Installation
 
 After cloning this repository, simply run `npm install` in the main directory
+
+## Enjoy!
